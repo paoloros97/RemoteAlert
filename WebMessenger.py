@@ -42,7 +42,7 @@ def WebInterface():
         
         if event == 'Show': 
             if values['-in-'] != '':
-                msg.configure(text=values['-in-'])
+                msg.configure(text='Messaggio:\n' + values['-in-'])
                 ws.state("zoomed")
                 #print(values['-in-'])
 
