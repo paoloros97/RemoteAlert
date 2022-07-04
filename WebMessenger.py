@@ -12,9 +12,10 @@ addr=addr[::-1]
 messaggio = 'ISTRUZIONI:\n1-Collegare questo PC al wi-fi.\n2-Collegare il dispositivo esterno alla stessa wi-fi. \n 3-Aprire sul browser del dispositivo esterno il link:\n ' + str(addr[0][4][0]) + ':2222'
 
 # Web interface:
-layout = [  [sg.Text('Send message', size=(15,2))],
-            [sg.Multiline(size=(35,8), key='-in-')],
-            [sg.Button('Show'), sg.Button('Hide')]
+layout = [  [sg.Text('Live Messenger by Paolo Ros', size=(25,2))],
+            [sg.Text('Inserisci testo:'), sg.Button('Clear', size=(9, 1))],
+            [sg.Multiline(size=(35,8), key='-in-', do_not_clear=False)],
+            [sg.Button('Show', size=(9, 1)), sg.Button('Hide', size=(9, 1))]
          ] 
 
 def AlertWindow():
@@ -45,10 +46,14 @@ def WebInterface():
                 msg.configure(text='Messaggio:\n' + values['-in-'])
                 ws.state("zoomed")
                 #print(values['-in-'])
-
         elif event == 'Hide': 
             ws.state(newstate='iconic')
             #print("Hide")
+        elif event == 'Clear':
+            window['-in-'].update('')
+        if event is None:
+            break
+    #window.close()
 
 
 thread_1 = Thread(target=AlertWindow)
