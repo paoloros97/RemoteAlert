@@ -21,7 +21,7 @@ messaggio = 'ISTRUZIONI:\n1-Collegare questo PC al wi-fi.\n2-Collegare il dispos
 layout = [  [sg.Text('Live Messenger by Paolo Ros', size=(25,2))],
             [sg.Text('Inserisci testo:'), sg.Button('Clear', size=(9, 1))],
             [sg.Multiline(size=(35,8), key='-in-')],
-            [sg.Button('Show', size=(9, 1)), sg.Button('Hide', size=(9, 1))]
+            [sg.Button('Show', size=(9, 2)), sg.Button('Hide', size=(9, 2))]
          ] 
 
 def AlertWindow():
@@ -36,7 +36,7 @@ def AlertWindow():
             fg = "black",
             bg = "yellow",
             width = 1400,
-            font = "Helvetica 42 bold")
+            font = "Arial 43 bold")
 
     msg.pack()
     ws.mainloop()
