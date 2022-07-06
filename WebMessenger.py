@@ -2,6 +2,7 @@ import PySimpleGUIWeb as sg
 from tkinter import *
 from threading import Thread
 import socket
+import time
 
 # Launch the following command to build the .exe version:
 # pyinstaller --clean --noconsole --onefile .\WebMessenger.py
@@ -21,7 +22,7 @@ messaggio = 'INSTRUCTIONS:\n1-Connect this PC to wi-fi (or ethernet).\n2-Connect
 layout = [  [sg.Text('Live Messenger by Paolo Ros', size=(25,2))],
             [sg.Text('Insert text:'), sg.Button('Clear', size=(9, 1))],
             [sg.Multiline(size=(35,8), key='-in-')],
-            [sg.Button('Show', size=(9, 2)), sg.Button('Hide', size=(9, 2))]
+            [sg.Button('Show', size=(9, 2)), sg.Button('Hide', size=(9, 2)), sg.Text('Feedback', key='ore')]
          ] 
 
 def AlertWindow():
@@ -46,14 +47,17 @@ def WebInterface():
     window = sg.Window('LiveMessenger by Paolo Ros', layout, web_port=2222, web_start_browser=False, disable_close=True)
     while True:
         event, values = window.read()
-        
+        local_time = time.ctime() # Timestamp
         if event == 'Show': 
             if values['-in-'] != '':
+                #local_time = time.ctime(time.time()) # Timestamp
                 msg.configure(text=values['-in-']) # Write received text
                 ws.state("zoomed") # Maximize
-        elif event == 'Hide': 
+                window['ore'].update('Mostrato alle: ' + str(local_time))
+        elif event == 'Hide':
+            #local_time = time.ctime(time.time()) # Timestamp
             ws.state(newstate='iconic') # Minimize
-
+            window['ore'].update('Nascosto alle: ' + str(local_time))
         elif event == 'Clear':
             window['-in-'].update('')
         if event is None:
