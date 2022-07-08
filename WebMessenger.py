@@ -1,11 +1,12 @@
 import PySimpleGUIWeb as sg
 from tkinter import *
+from tkinter import messagebox
 from threading import Thread
 import socket
 import time
 
 # Launch the following command to build the .exe version:
-# pyinstaller --clean --noconsole --onefile .\WebMessenger.py
+# pyinstaller --clean --onefile .\WebMessenger.py
 
 # Machine IP address 
 addr = socket.getaddrinfo(socket.gethostname(), None)
@@ -25,6 +26,10 @@ layout = [  [sg.Text('Live Messenger by Paolo Ros', size=(25,2))],
             [sg.Button('Show', size=(9, 2)), sg.Button('Hide', size=(9, 2)), sg.Text('Feedback', key='ore')]
          ] 
 
+def disable_event():
+    messagebox.showwarning('No no no no no', 'Chiudere la finestra del terminale, non questa.')
+    pass
+
 def AlertWindow():
     global ws
     ws = Tk()
@@ -40,33 +45,38 @@ def AlertWindow():
             font = "Arial 43 bold")
 
     msg.pack()
+    ws.protocol("WM_DELETE_WINDOW", disable_event)
     ws.mainloop()
-
 
 def WebInterface():
     window = sg.Window('LiveMessenger by Paolo Ros', layout, web_port=2222, web_start_browser=False, disable_close=True)
     while True:
         event, values = window.read()
+
         local_time = time.ctime() # Timestamp
+
         if event == 'Show': 
-            if values['-in-'] != '':
-                #local_time = time.ctime(time.time()) # Timestamp
+            if values['-in-'] != '': # Se il testo non è vuoto
                 msg.configure(text=values['-in-']) # Write received text
                 ws.state("zoomed") # Maximize
-                window['ore'].update('Mostrato alle: ' + str(local_time))
+                window['ore'].update('Showed @ ' + str(local_time))
+                autoclose = ws.after(40000, lambda:(ws.state(newstate='iconic'), window['ore'].update('AutoHidden @ ' + str(local_time))))
+
         elif event == 'Hide':
-            #local_time = time.ctime(time.time()) # Timestamp
             ws.state(newstate='iconic') # Minimize
-            window['ore'].update('Nascosto alle: ' + str(local_time))
+            window['ore'].update('Hidden @ ' + str(local_time))
+            ws.after_cancel(autoclose) # Stop AutoClosing
+
         elif event == 'Clear':
             window['-in-'].update('')
+
         if event is None:
             break
+
     window.close()
 
-
-thread_1 = Thread(target=AlertWindow)
-thread_2 = Thread(target=WebInterface)
+thread_1 = Thread(target = AlertWindow)
+thread_2 = Thread(target = WebInterface)
 
 thread_1.start()
 thread_2.start()
