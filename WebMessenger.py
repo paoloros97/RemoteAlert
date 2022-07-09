@@ -24,7 +24,7 @@ messaggio = 'Connect to:\n ' + str(addr[0][4][0]) + ':2222'
 # Web interface:
 layout = [  [sg.Text('Live Messenger by Paolo Ros', size=(25,2))],
             [sg.Text('Insert text:'), sg.Button('Clear', size=(9, 1))],
-            [sg.Multiline(size=(35,8), key='-in-')],
+            [sg.Multiline(size=(35,4), key='-in-')],
             [sg.Button('Show', size=(9, 2)), sg.Button('Hide', size=(9, 2))],
             [sg.Text(' ', key='ore')],
             [sg.Text('The message will be auto-closed after 40s.')],
