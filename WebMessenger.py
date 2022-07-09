@@ -7,6 +7,7 @@ import time
 
 # Launch the following command to build the .exe version:
 # pyinstaller --clean --onefile .\WebMessenger.py
+# pyinstaller --clean --onefile --icon chat.ico .\WebMessenger.py
 
 
 addr = socket.getaddrinfo(socket.gethostname(), None) #local IP address 
