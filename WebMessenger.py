@@ -45,7 +45,6 @@ def AlertWindow():
 
     screen_width = ws.winfo_screenwidth() # Screen width
     ws.geometry('+%d+%d' % (0, 0)) # Window position top left
-    ws.iconbitmap("frog.ico")
     ws.title("LiveMessenger by Paolo Ros") # Title 
     ws.attributes('-topmost', True) # Always on top
     ws.configure(bg='black') # Background black
