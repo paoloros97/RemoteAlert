@@ -7,21 +7,16 @@ import time
 import ctypes
 ctypes.windll.user32.ShowWindow( ctypes.windll.kernel32.GetConsoleWindow(), 6 ) # Auto-minimize console
 
-# Launch the following command to build the .exe version, without icon:
-# pyinstaller --clean --onefile .\WebMessenger.py
-# With icon:
 # pyinstaller --clean --onefile --icon frog.ico .\WebMessenger.py
 
-
 addr = socket.getaddrinfo(socket.gethostname(), None) #local IP address 
-addr=addr[::-1] # swap
+addr = addr[::-1] # swap
 
 print("LiveMessenger by Paolo Ros")
 print("INSTRUCTIONS:")
 print("1-Connect this PC to wi-fi (or ethernet).")
 print("2-Connect another device to the same network, wi-fi or ethernet (i.e. Smartphone).")
 print('3-Open this link on your external device\'s browser: ' + str(addr[0][4][0]) + ':2222')
-
 messaggio = str(addr[0][4][0]) + ':2222'
 
 # Web interface:
@@ -32,8 +27,6 @@ layout = [  [sg.Text('Live Messenger by Paolo Ros', size=(25,2))],
             [sg.Text(' ', key='ore')],
             [sg.Text('The message will be auto-closed after 40s.')],
          ] 
-
-
 
 def disable_event(): # Make x button useless
     messagebox.showwarning('No No No', 'Chiudere la finestra del terminale, non questa.')
@@ -96,9 +89,7 @@ def WebInterface():
 
 thread_1 = Thread(target = AlertWindow)
 thread_2 = Thread(target = WebInterface)
-
 thread_1.start()
 thread_2.start()
-
 thread_1.join()
 thread_2.join()
