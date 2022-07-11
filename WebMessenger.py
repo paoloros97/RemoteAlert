@@ -21,7 +21,10 @@ messaggio = str(addr[0][4][0]) + ':2222'
 
 # Web interface:
 layout = [  [sg.Text('Live Messenger by Paolo Ros', size=(25,2))],
-            [sg.Text('Insert text:'), sg.Button('Clear', size=(9, 1))],
+            [sg.Text('Background color: '), sg.Text('Green', key='bg')],
+            [sg.Button('Green', size=(9, 1)), sg.Button('Yellow', size=(9, 1)), sg.Button('Red', size=(9, 1))],
+            [sg.Text('Insert text:')], 
+            [sg.Button('Clear', size=(9, 1))],
             [sg.Multiline(size=(35,4), key='-in-')],
             [sg.Button('Show', size=(9, 2)), sg.Button('Hide', size=(9, 2))],
             [sg.Text(' ', key='ore')],
@@ -46,7 +49,7 @@ def AlertWindow():
     msg = Message(ws, 
             text=messaggio,
             fg = "black",
-            bg = "yellow",
+            bg = "#34c759",
             width = screen_width, # full width
             font = "Arial 43 bold")
     msg.pack()
@@ -82,6 +85,16 @@ def WebInterface():
         elif event == 'Clear':
             window['-in-'].update('')
 
+        elif event == 'Green':
+            msg.configure(bg = "#34c759") # Change background color
+            window['bg'].update('Green')
+        elif event == 'Yellow':
+            msg.configure(bg = "#ffcc00") # Change background color
+            window['bg'].update('Yellow')
+        elif event == 'Red':
+            msg.configure(bg = "#ff3b30") # Change background color
+            window['bg'].update('Red')
+        
         if event is None:
             break
 
