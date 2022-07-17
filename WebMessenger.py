@@ -9,8 +9,8 @@ ctypes.windll.user32.ShowWindow( ctypes.windll.kernel32.GetConsoleWindow(), 6 ) 
 
 # pyinstaller --clean --onefile --icon frog.ico .\WebMessenger.py
 
-addr = socket.getaddrinfo(socket.gethostname(), None) #local IP address 
-addr = addr[::-1] # swap
+addr = socket.getaddrinfo(socket.gethostname(), None) #get local IP address 
+addr = addr[::-1] # flip order
 
 print("LiveMessenger by Paolo Ros")
 print("INSTRUCTIONS:")
@@ -28,7 +28,7 @@ layout = [  [sg.Text('Live Messenger by Paolo Ros', size=(25,2))],
             [sg.Multiline(size=(35,4), key='-in-')],
             [sg.Button('Show', size=(9, 2)), sg.Button('Hide', size=(9, 2))],
             [sg.Text(' ', key='ore')],
-            [sg.Text('The message will be auto-closed after 40s.')],
+            [sg.Text('The message will be auto-closed after 40s.')]
          ] 
 
 def disable_event(): # Make x button useless
@@ -40,7 +40,7 @@ def AlertWindow():
     ws = Tk()
 
     screen_width = ws.winfo_screenwidth() # Screen width
-    ws.geometry('+%d+%d' % (0, 0)) # Window position top left
+    ws.geometry("+0+0") # Window position top left
     ws.title("LiveMessenger by Paolo Ros") # Title 
     ws.attributes('-topmost', True) # Always on top
     ws.configure(bg='black') # Background black
@@ -99,6 +99,9 @@ def WebInterface():
             break
 
     window.close()
+
+
+time.sleep(10)
 
 thread_1 = Thread(target = AlertWindow)
 thread_2 = Thread(target = WebInterface)
